@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
     
-    <title>Dash 2022</title>
+    <title>Dash 2023</title>
   </head>
     
 <style>
@@ -22,7 +22,7 @@
     <header>
         <div id="title"> The GRIFFITRONS </div>
         <div id="subtitle"> FRC #1661 </div>
-        <div id="name">Eve</div>
+        <div id="name">Nova</div>
         <div id="robot-state">ROBOT STATUS: unknown</div>
         <div id="timer">REMAINING TIME: 0:00</div>
     </header>
@@ -277,6 +277,11 @@
   <script src="src/networktables/networktables.js"></script>
   <script src="src/connection.js"></script>
   <script src="src/ui.js"></script>
+  <script src="../node_modules/@frc-web-components/frc-web-components/build/frc-web-components.min.js"></script>
+  <script>
+    webbitStore.addSourceProvider('NetworkTables');
+    webbitStore.setDefaultSource('NetworkTables');
+  </script>
   </body>
     
     

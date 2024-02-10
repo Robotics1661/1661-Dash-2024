@@ -40,7 +40,7 @@ function onRobotConnection(connected) {
         address.disabled = connect.disabled = false;
         connect.textContent = 'Connect';
         // Add the default address and select xxxx
-        address.value = 'roborio-1661-frc.local';
+        address.value = 'roborio-1661-frc.local'//'roborio-1661-frc.local';
         address.focus();
 //      address.setSelectionRange(8, 12);
         // On click try to connect and disable the input and the button
