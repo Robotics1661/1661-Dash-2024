@@ -42,7 +42,7 @@ function createWindow() {
     client.start((con, err) => {
 
         let connectFunc = () => {
-            console.log('Sending status');
+            console.log('Sending status '+con);
             mainWindow.webContents.send('connected', con);
 
             // Listens to the changes coming from the client
@@ -51,8 +51,12 @@ function createWindow() {
 
         // If the Window is ready than send the connection status to it
         if (ready) {
+            console.log("Sending connection status now");
             connectFunc();
-        } else connected = connectFunc;
+        } else {
+            console.log("Waiting for NT to be ready");
+            connected = connectFunc;
+        }
     });
     // When the script starts running in the window set the ready variable
     ipc.on('ready', (ev, mesg) => {

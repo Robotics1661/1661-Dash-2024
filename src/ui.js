@@ -195,7 +195,8 @@ ui.encoder.shooterEncReset.onclick = function() {
 };
 
 function onStart () {
-
+    document.body.classList.toggle('login', true);
+    console.log("Showing login");
     // ui.auto.leftPath.hidden = true;
     // ui.auto.leftMiddlePath.hidden = true;
     // ui.auto.rightMiddlePath.hidden = true;

@@ -3,7 +3,9 @@ let ipc = require('electron').ipcRenderer;
 var NetworkTables =
     (() => {
         let keys = {}, connectionListeners = [], connected = false, globalListeners = [], keyListeners = {}, robotAddress = '127.0.0.1';
+        console.log("Sending ready message");
         ipc.send('ready');
+        console.log("Sent");
         ipc.on('connected', (ev, con) => {
             connected = con;
             connectionListeners.map(e => e(con));
