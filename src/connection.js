@@ -5,8 +5,7 @@ let address = document.getElementById('connect-address'),
 //NetworkTables.addWsConnectionListener(onNetworkTablesConnection, true);
 
 // Set function to be called when robot dis/connects
-onRobotConnection(false);
-NetworkTables.addRobotConnectionListener(onRobotConnection, true);
+NetworkTables.addRobotConnectionListener(onRobotConnection, false);
 
 // Sets function to be called when any NetworkTables key/value changes
 //NetworkTables.addGlobalListener(onValueChanged, true);

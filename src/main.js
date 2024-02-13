@@ -42,7 +42,6 @@ function createWindow() {
     client.start((con, err) => {
 
         let connectFunc = () => {
-            console.log('Sending status '+con);
             mainWindow.webContents.send('connected', con);
 
             // Listens to the changes coming from the client
@@ -70,6 +69,7 @@ function createWindow() {
     ipc.on('connect', (ev, address, port) => {
         console.log(`Trying to connect to ${address}` + (port ? ':' + port : ''));
         let callback = (connected, err) => {
+            console.log('Result: ' + (connected ? "connected" : "failed to connect"));
             mainWindow.webContents.send('connected', connected);
         };
         if (port) {
@@ -94,7 +94,12 @@ function createWindow() {
         // 1366x570 is a good standard height, but you may want to change this to fit your DriverStation's screen better.
         // It's best if the dashboard takes up as much space as possible without covering the DriverStation application.
         // The window is closed until the python server is ready
-        show: false
+        show: false,
+        webPreferences: {
+            // FIXME: the following two configs are inherently insecure and should be replaced with properly-sandboxed preloads
+            nodeIntegration: true,
+            contextIsolation: false,
+        }
     });
     // Move window to top (left) of screen.
     mainWindow.setPosition(0, 0);
@@ -105,6 +110,9 @@ function createWindow() {
         console.log('main window is ready to be shown!');
         mainWindow.show();
     });
+
+    // Open dev tools
+    mainWindow.openDevTools();
 
     // Remove menu
     mainWindow.setMenu(null);

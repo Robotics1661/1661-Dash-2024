@@ -176,12 +176,12 @@
                         <span id="shooter-draw-value" class="bar-value"><span id="shooter-draw-val" >0.00</span>A</span>
 
         </div>
-        <div class="bar-complex large-bar">
+        <!--<div class="bar-complex large-bar">
             <span class="bar-text">Velocity</span>
             <progress id="velocity" value = "0" max = "50" class="bar"></progress>
                         <span id="velocity-value" class="bar-value"><span id="velocity-val" >0.00</span>m/s</span>
 
-        </div>
+        </div>-->
         <div class="bar-complex large-bar">
             <span class="bar-text">Acceleration</span>
             <progress id="acceleration" value = "0" max = "50" class="bar"></progress>
@@ -258,30 +258,32 @@
       
     
 
+    <script>console.log("Pre jquery");</script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script>console.log("Post jquery");</script>
     <div id="login">
         <input id="connect-address" type="text" value="10.16.61.2">
         <button id="connect">Connect (test)</button>
     </div>
 
 
-    <script>
+    <!--<script>
 
     var myDiv = document.getElementById("console-output");
     myDiv.scrollTop = myDiv.scrollHeight;
 
 
-    </script>
+    </script>-->
 
     
   <script src="src/networktables/networktables.js"></script>
   <script src="src/connection.js"></script>
   <script src="src/ui.js"></script>
-  <script src="../node_modules/@frc-web-components/frc-web-components/build/frc-web-components.min.js"></script>
+  <!--<script src="./node_modules/@frc-web-components/frc-web-components/dist/frc-web-components.es.js"></script>
   <script>
     webbitStore.addSourceProvider('NetworkTables');
     webbitStore.setDefaultSource('NetworkTables');
-  </script>
+  </script>-->
   </body>
     
     

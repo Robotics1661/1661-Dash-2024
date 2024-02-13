@@ -67,7 +67,7 @@ let ui = {
         haDraw: document.getElementById('ha-draw'),
         vaDraw: document.getElementById('va-draw'),
         shooterEnc: document.getElementById('shooter-draw'),
-        velocity: document.getElementById('velocity'),
+        //velocity: document.getElementById('velocity'),
         acceleration: document.getElementById('acceleration'),
         temperature: document.getElementById('temperature'),
 
@@ -77,7 +77,7 @@ let ui = {
         hadrawVal: document.getElementById('ha-draw-val'),
         vadrawVal: document.getElementById('va-draw-val'),
         shooterDrawVal: document.getElementById('shooter-draw-val'),
-        velocityVal: document.getElementById('velocity-val'),
+        //velocityVal: document.getElementById('velocity-val'),
         accelerationVal: document.getElementById('acceleration-val'),
         temperatureVal: document.getElementById('temperature-val')
     },
@@ -274,10 +274,10 @@ NetworkTables.addKeyListener('/SmartDashboard/shooterDraw', (key, value) => {
     ui.power.shooterDrawVal.innerHTML = (Math.floor(value * 100) / 100).toFixed(2);
     ui.power.shooterDraw.value = value;
 });
-NetworkTables.addKeyListener('/SmartDashboard/velocity', (key, value) => {
+/*NetworkTables.addKeyListener('/SmartDashboard/velocity', (key, value) => {
     ui.power.velocityVal.innerHTML = (Math.floor(value * 100) / 100).toFixed(2);
     ui.power.velocity.value = value;
-});
+});*/
 NetworkTables.addKeyListener('/SmartDashboard/acceleration', (key, value) => {
     ui.power.accelerationVal.innerHTML = (Math.floor(value * 100) / 100).toFixed(2);
     ui.power.acceleration.value = value;
@@ -391,6 +391,7 @@ NetworkTables.addKeyListener('/SmartDashboard/LimelightY', (key, value) => {
         ui.shot.shotLight.style.background = "#f16000";
     }
 });
+/*
 NetworkTables.addKeyListener('/SmartDashboard/p', (key, value) => {
     ui.pid.p.value = value;
     ui.pid.save.style.background = '#415359';
@@ -414,7 +415,7 @@ ui.pid.save.onclick = function() {
   ui.pid.pCheck.style.opacity = "1";
   ui.pid.iCheck.style.opacity = "1";
   ui.pid.dCheck.style.opacity = "1";
-}
+}*/
 
 function handleChange(checkbox) {
     if(checkbox.checked == true){
@@ -501,6 +502,8 @@ NetworkTables.addKeyListener('/SmartDashboard/timer', (key, value) => {
 
 NetworkTables.addKeyListener('/SmartDashboard/isred', (key, value) => {
 
+    if (true) return;
+
     if (value) {
         ui.field.tarmac.classList.remove('flip');
         ui.field.leftRocket1.classList.remove('color-red');
@@ -565,5 +568,5 @@ NetworkTables.addKeyListener('/SmartDashboard/isred', (key, value) => {
 // });
 
 addEventListener('error',(ev)=>{
-    ipc.send('windowError',ev)
+    ipc.send('windowError',`${ev}`)
 })
