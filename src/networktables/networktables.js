@@ -25,14 +25,28 @@ var NetworkTables =
         });
         ipc.on('update', (ev, mesg) => {
             let temp = keys[mesg.key];
-            temp.flags = mesg.flags;
-            temp.val = mesg.val;
-            globalListeners.map(e => e(mesg.key, temp.val, temp.new));
-            if (globalListeners.length > 0)
-                keys[mesg.key].new = false;
-            if (mesg.key in keyListeners) {
-                keyListeners[mesg.key].map(e => e(mesg.key, temp.val, temp.new));
-                temp.new = false;
+            if (temp == null) { // we probably reloaded, re-add
+                console.log("Key '"+mesg.key+"' not found in keys, mesg=");
+                console.log(mesg);
+
+                keys[mesg.key] = { val: mesg.val, valType: mesg.valType, id: mesg.id, flags: mesg.flags, new: true };
+                globalListeners.map(e => e(mesg.key, mesg.val, true));
+                if (globalListeners.length > 0)
+                    keys[mesg.key].new = false;
+                if (mesg.key in keyListeners) {
+                    keyListeners[mesg.key].map(e => e(mesg.key, mesg.val, true));
+                    keys[mesg.key].new = false;
+                }
+            } else {
+                temp.flags = mesg.flags;
+                temp.val = mesg.val;
+                globalListeners.map(e => e(mesg.key, temp.val, temp.new));
+                if (globalListeners.length > 0)
+                    keys[mesg.key].new = false;
+                if (mesg.key in keyListeners) {
+                    keyListeners[mesg.key].map(e => e(mesg.key, temp.val, temp.new));
+                    temp.new = false;
+                }
             }
         });
         ipc.on('flagChange', (ev, mesg) => {

@@ -24,6 +24,8 @@ let mainWindow;
 
 let connected,
     ready = false;
+let was_connected = false;
+let reloading = false;
 
 let clientDataListener = (key, val, valType, mesgType, id, flags) => {
     if (val === 'true' || val === 'false') {
@@ -43,6 +45,7 @@ function createWindow() {
 
         let connectFunc = () => {
             mainWindow.webContents.send('connected', con);
+            was_connected = con;
 
             // Listens to the changes coming from the client
             client.addListener(clientDataListener);
@@ -62,7 +65,25 @@ function createWindow() {
         console.log('NetworkTables is ready');
         ready = mainWindow != null;
         // Send connection message to the window if the message is ready
-        if (connected) connected();
+        if (connected && !reloading) {
+            connected();
+        } else if (reloading || true) {
+            if (!reloading) console.log("emergency reload");
+            console.log("starting reload process");
+            mainWindow.webContents.send('connected', false);
+            setTimeout(() => {
+                console.log("resending status");
+                if (was_connected) {
+                    mainWindow.webContents.send('connected', true);
+                } else {
+                    mainWindow.webContents.send('setup_connect_now');
+                }
+                client.addListener(clientDataListener);
+                reloading = false;
+            }, 200);
+        } else {
+            console.log("neither connected nor reloading");
+        }
         connected = null;
     });
     // When the user chooses the address of the bot than try to connect
@@ -71,6 +92,7 @@ function createWindow() {
         let callback = (connected, err) => {
             console.log('Result: ' + (connected ? "connected" : "failed to connect"));
             mainWindow.webContents.send('connected', connected);
+            was_connected = connected;
         };
         if (port) {
             client.start(callback, address, port);
@@ -125,6 +147,16 @@ function createWindow() {
         mainWindow = null;
         ready = false;
         client.removeListener(clientDataListener);
+    });
+    ipc.on('reload', (ev, mesg) => {
+        if (ready) {
+            console.log('Reloading');
+            reloading = true;
+            client.removeListener(clientDataListener);
+            mainWindow.reload();
+        } else {
+            console.log('Not reloading..................');
+        }
     });
     mainWindow.on('unresponsive', () => {
         console.log('Main Window is unresponsive');

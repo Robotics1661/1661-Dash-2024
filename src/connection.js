@@ -15,8 +15,15 @@ onkeydown = key => {
     if (key.key === 'Escape') {
         document.body.classList.toggle('login');
         console.log("Toggled login");
+    } else if (key.key === 'r' && key.ctrlKey) {
+        ipc.send('reload');
     }
 };
+
+ipc.on('setup_connect_now', (ev, mesg) => {
+    //onRobotConnection(false);
+    console.log("setup_connect_now called");
+});
 
 /**
  * Function to be called when robot connects
@@ -30,6 +37,8 @@ function onRobotConnection(connected) {
         // On connect hide the connect popup
         // ui.robotState.classList.addClass('green-status');
         document.body.classList.toggle('login', false);
+        address.disabled = connect.disabled = true;
+        connect.textContent = 'Connected';
     }
     else {
         // On disconnect show the connect popup
